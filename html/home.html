@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ChatApp</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #3b3e49;
+            font-family: Arial;
+        }
+
+        #container {
+            width: 100%;
+            height: auto;
+            background: #eff3f7;
+            margin: 0 auto;
+            font-size: 0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        aside {
+            width: 30%;
+            height: 100vh;
+            background-color: #3b3e49;
+            display: inline-block;
+            font-size: 15px;
+            vertical-align: top;
+        }
+
+        main {
+            width: 70%;
+            height: 100vh;
+            display: inline-block;
+            font-size: 15px;
+            vertical-align: top;
+        }
+
+        aside header {
+            padding: 8px 20px 8px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1.5px solid white;
+        }
+
+        aside header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px dashed rgb(89, 202, 24);
+            
+        }
+
+        aside header h2 {
+            color: white;
+            font-size: 15px;
+            text-transform: capitalize;
+        }
+
+        aside input {
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            padding: 0 50px 0 20px;
+            background-color: #5e616a;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
+            background-repeat: no-repeat;
+            background-position: 320px;
+            background-size: 40px;
+        }
+
+        aside input::placeholder {
+            color: #fff;
+        }
+
+        aside ul {
+            padding-left: 0;
+            margin: 0;
+            list-style-type: none;
+            overflow-y: scroll;
+            height: 88.5vh;
+
+        }
+
+        aside li {
+            padding: 10px 0;
+        }
+
+        aside li:hover {
+            background-color: #5e616a;
+        }
+
+        h2,
+        h3 {
+            margin: 0;
+        }
+
+        aside li img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 20px;
+            margin-right: 8px;
+        }
+
+        aside li div {
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 12px;
+        }
+
+        aside li h2 {
+            font-size: 16px;
+            color: #fff;
+            font-weight: normal;
+        }
+
+        aside li h3 {
+            font-size: 12px;
+            color: #7e818a;
+            font-weight: normal;
+        }
+
+        .status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 7px;
+        }
+
+        .green {
+            background-color: #58b666;
+        }
+
+        .orange {
+            background-color: #ff725d;
+        }
+
+        .blue {
+            background-color: #6fbced;
+            margin-right: 0;
+            margin-left: 7px;
+        }
+
+        main header {
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        main header>* {
+            vertical-align: top;
+        }
+
+        main header div img:first-child {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        /* main header button:last-child {
+            margin-top: 8px;
+            margin-left: 460px;
+        } */
+
+        main header div {
+            align-items: center;
+        }
+
+        main header h2 {
+            font-size: 16px;
+            margin-left: 15px;
+        }
+
+        main header h3 {
+            font-size: 14px;
+            font-weight: normal;
+            color: #7e818a;
+        }
+
+        #chat {
+            padding: 20px 0 0 0;
+            margin: 0;
+            list-style-type: none;
+            overflow-y: scroll;
+            height: 72vh;
+            border-top: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            /* background-color: #d9e2e9; */
+            background: #d9e2e9 url("https://camo.githubusercontent.com/cba518ead87b032dc6f1cbfc7fade27604449201ac1baf34d889f77f093f01ac/68747470733a2f2f7765622e77686174736170702e636f6d2f696d672f62672d636861742d74696c652d6461726b5f61346265353132653731393562366237333364393131306234303866303735642e706e67") repeat;
+        }
+
+        #chat li {
+            padding: 10px 30px;
+        }
+
+        #chat h2,
+        #chat h3 {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: normal;
+        }
+
+        #chat h3 {
+            color: #03030362;
+            font-weight: 600;
+            font-size: 10px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        #chat .entete {
+            margin-bottom: 5px;
+        }
+
+        #chat .message {
+            padding: 5px 10px;
+            color: #fff;
+            line-height: 25px;
+            max-width: 90%;
+            display: inline-block;
+            text-align: left;
+            border-radius: 5px;
+            word-wrap: break-word;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+        }
+
+        #chat .me {
+            text-align: right;
+        }
+
+        #chat .you .message {
+            background-color: #58b666;
+        }
+
+        #chat .me .message {
+            background-color: #6fbced;
+        }
+
+        #chat .triangle {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 10px 10px 10px;
+        }
+
+        #chat .you .triangle {
+            border-color: transparent transparent #58b666 transparent;
+            margin-left: 5px;
+        }
+
+        #chat .me .triangle {
+            border-color: transparent transparent #6fbced transparent;
+            margin-left: 792px;
+        }
+
+        main footer {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        main footer input {
+            margin-top: 5px;
+            resize: none;
+            border: none;
+            width: 100%;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 13px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+        }
+
+        main footer textarea::placeholder {
+            color: #ddd;
+        }
+
+        main footer img {
+            height: 30px;
+            cursor: pointer;
+        }
+
+        main footer a {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #6fbced;
+            vertical-align: top;
+            margin-left: 333px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <aside>
+            <header>
+                <img src="../public/images/<%= userData[3][0].profile_image %>" alt="">
+                <h2>
+                    <%= userData[3][0].name %>
+                </h2>
+                <a href="/logout"><button class="btn btn-outline-danger">logout</button></a>
+                <!-- <input type="text" placeholder="search"> -->
+            </header>
+            <ul>
+                <% if(userData.length> 0){ %>
+                    <% userData[0].forEach((element)=> { %>
+                        <a href="/home/<%= element.id %>" style="text-decoration: none;">
+                            <% if(element.id==userData[1][0].id){ %>
+                                <li style="background-color: #58b666;">
+                                    <% }else{ %>
+                                <li style="background-color:#3b3e49;">
+                                    <% } %>
+                                        <img src="../public/images/<%= element.profile_image %>" alt="">
+                                        <div>
+                                            <h2>
+                                                <% if(element.id==userData[3][0].id){ %>
+                                                    <%= element.name %> (You)
+                                                        <% }else{ %>
+                                                            <%= element.name %>
+                                                                <% } %>
+
+                                            </h2>
+                                        </div>
+                                </li>
+                        </a>
+                        <% }); %>
+                            <% } %>
+            </ul>
+        </aside>
+        <main>
+            <header>
+                <div class="d-flex">
+                    <img src="../public/images/<%= userData[1][0].profile_image %>" alt="">
+                    <h2>
+                        <%= userData[1][0].name %>
+                    </h2>
+                </div>
+                <a href="/logout"><button class="btn btn-outline-secondary py-1">clear chat</button></a>
+
+            </header>
+            <ul id="chat">
+                <% if(userData[2].length> 0){ %>
+                    <% userData[2].forEach((element)=> { %>
+                        <% if(element.receiver_id==userData[1][0].id){ %>
+                            <li class="me">
+                                <% }else{ %>
+                            <li class="you">
+                                <% } %>
+                                    <div class="entete">
+                                        <span class="status green"></span>
+                                        <h2>
+                                            <%= element.sender_name %>
+                                        </h2>
+                                        <h3>
+                                            <%= element.msg_time %>
+                                        </h3>
+                                    </div>
+                                    <div class="triangle"></div>
+                                    <div class="message">
+                                        <%= element.msg %>
+                                    </div>
+                            </li>
+                            <% }) %>
+                                <% }else{ %>
+                                    <li class="w-100 d-flex justify-content-center" id="no-con">
+                                        <p
+                                            style="text-align: center; padding: 5px; width: 60%; border: 1.5px dashed #58b6664a;background-color: #58b66633; border-radius: 10px;color: #51bc61;font-size: 12px;">
+                                            Currently, No Conversation</p>
+                                    </li>
+                                    <% } %>
+            </ul>
+            <footer>
+                <input placeholder="Type your message" id="inputmsg" type="text">
+            </footer>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        const socket = io()
+        let textarea = document.querySelector("#inputmsg");
+        let message_area = document.querySelector("#chat");
+        message_area.scrollTop = message_area.scrollHeight
+
+        // window.setInterval(function() {
+        //     var elem = document.getElementById('chat');
+        //     elem.scrollTop = elem.scrollHeight;
+        // }, 100);
+
+        textarea.addEventListener('keyup', (e) => {
+            if (e.target.value != "") {
+                if (e.key === "Enter") {
+                    sendMessage(e.target.value);
+                }
+            }
+
+        })
+
+        function sendMessage(message) {
+            let msg = {
+                name: `<%= userData[3][0].name %>`,
+                sender_id: `<%= userData[3][0].id %>`,
+                receiver_id: `<%= userData[1][0].id %>`,
+                message: message.trim()
+            }
+
+            // console.log(msg)
+            appendMessage(msg, "outgoing");
+            textarea.value = "";
+            socket.emit("message", msg);
+        }
+
+        //receive massage
+        socket.on("message", (msg) => {
+            var sender_id = `<%= userData[1][0].id %>`
+            var receiver_id = `<%= userData[3][0].id %>`
+            if (sender_id == msg.sender_id && msg.receiver_id == receiver_id) {
+                appendMessage(msg, "incoming");
+            }
+        })
+
+        function appendMessage(msg, type) {
+            var data = ``
+            if (type == "outgoing") {
+                data += `<li class="me">`
+            } else {
+                data += `<li class="you">`
+            }
+
+            data += `
+        <div class="entete">
+        <span class="status green"></span>
+        <h2>
+            ${msg.name}
+        </h2>
+        <h3>
+            Today
+        </h3>
+        </div>
+        <div class="triangle"></div>
+        <div class="message">
+        ${msg.message}
+        </div>
+        </li>
+        `
+
+            // if (document.getElementById('no-con').classList.contains('d-flex')) {
+            //     document.getElementById("no-con").classList.remove('d-flex');
+            //     document.getElementById("no-con").classList.add('d-none');
+            // }
+
+            message_area.innerHTML += data;
+            message_area.scrollTop = message_area.scrollHeight
+        }
+    </script>
+</body>
+
+</html>

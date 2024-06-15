@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Registration</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/src/parsley.min.css">
+    </head>
+    <body class="bg-light">
+        <div class="container  p-5 my-5 border" style="background-color: white;width: 35%;">
+            <form class="row g-3" action="signup-user" method="post" enctype="multipart/form-data" data-parsley-validate>
+                <h3 class="text-center">Registration</h3>
+                <% if(error.length > 0) { %>
+                    <div class="alert alert-danger py-2" role="alert">
+                        <%= error[0] %>
+                    </div>
+                <% } %>
+                <div class="col-md-12">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" value="<%= queryData.first_name %>"
+                    data-parsley-required="true"
+                    data-parsley-required-message="Please enter first name."
+                    data-parsley-length="[3, 20]"
+                    data-parsley-pattern="/^[a-zA-Z]+$/"
+                    data-parsley-pattern-message="Please enter valid first name."
+                    data-parsley-length-message="Please enter min 3 and max 30 character."
+                    data-parsley-trigger="input"
+                    >
+                </div>
+
+                <div class="col-md-12">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" value="<%= queryData.last_name %>"
+                    data-parsley-required="true"
+                    data-parsley-required-message="Please enter last name."
+                    data-parsley-length="[3, 20]"
+                    data-parsley-pattern="/^[a-zA-Z]+$/"
+                    data-parsley-pattern-message="Please enter valid last name."
+                    data-parsley-length-message="Please enter min 3 and max 30 character."
+                    data-parsley-trigger="input"
+                    >
+                </div>
+
+                <div class="col-md-12">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email address" value="<%= queryData.email %>"
+                    data-parsley-required="true"
+                    data-parsley-required-message="Please enter email address."
+                    data-parsley-pattern="/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/"
+                    data-parsley-pattern-message = "Please enter valid email with match!"
+                    data-parsley-trigger="input"
+                    >
+                </div>
+
+                <div class="col-md-12">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                    data-parsley-required="true"
+                    data-parsley-required-message="Please enter password."
+                    data-parsley-pattern= "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                    data-parsley-pattern-message = "Minimum 8 characters, at least one letter and one number."
+                    data-parsley-trigger="input"
+                    >
+                </div>
+
+                <div class="col-md-12">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
+                    data-parsley-required="true"
+                    data-parsley-required-message="Please enter confirm password"
+                    data-parsley-pattern= "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                    data-parsley-pattern-message = "Minimum 8 characters, at least one letter and one number."
+                    data-parsley-equalto="#password"
+                    data-parsley-equalto-message = "password and confirm password should be the same."
+                    data-parsley-trigger="input"
+                    >
+                </div>
+
+                <div class="col-md-6">
+                    <label for="profile_image" class="form-label">Profile Picture</label>
+                    <input type="file" class="form-control" id="profile_image" name="profile_image" aria-label="file example" value="<%= queryData.profile_image %>"
+                    data-parsley-required="true"
+                    data-parsley-required-message="Please select image."
+                    data-parsley-pattern="/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i"
+                    data-parsley-pattern-message = "Please select only valid formate images.(jpeg,jpg,png)"
+                    data-parsley-trigger="change"	
+                    >
+                </div>
+
+                <div class="col-md-6">
+                    <div class="w-100 p-2 bg-ligth h-100 text-center">
+                        <img src="../public/images/No-Preview.jpg" alt="Img-Preview" id="imgPreview" class="img-fluid" style="width: 60px;height: 60px;">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <button class="btn btn-success w-100" type="submit" id="submit">Submit</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary w-100" type="reset" id="reset">Reset</button>
+                </div>
+                <div class="col-md-12 text-center">
+                    <label class="form-label">Already have an account? <a class="link" href="/login">login</a></label>
+                </div>
+            </form>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/parsleyjs@2.9.2/dist/parsley.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.js"></script>
+
+        <script>
+
+            $(document).ready(function(){
+                $('#profile_image').change(function (e) {
+                file = this.files[0];
+                
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        $("#imgPreview").attr("src", event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            });
+        </script>
+    </body>
+</html>
